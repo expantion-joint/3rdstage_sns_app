@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<!-- 言語の指定-->
+<html lang="ja">
+  <head>
+  <!-- アプリのタイトル-->
+    <title>考え中</title>
+    
+    <!-- ウェブページがモバイルデバイスやレスポンシブデザインをサポートするブラウザ上でどのように表示されるべきかを制御-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <!--"viewport"スマホ向けの文書表示-->
+      <!--width=device-width 表示幅は端末画面の幅-->
+      <!--initial-scale=1 webページが最初に読み込まれた時の拡大・縮小率-->
+    
+    <!--クロスサイトリクエストフォージェリ対策-->
+    <%= csrf_meta_tags %>
+      <!--csrf:クロスサイトリクエストフォージェリ-->
+      <!--Railsアプリ外部からの不正アクセスに対処するためのタグ-->
+      <!--いたずら的書き込みや不正サイトへの誘導などを防止する-->
+        
+    <!--Railsの機能を使用してアプリケーションのセキュリティを向上させるための記述-->
+    <%= csp_meta_tag %>
+      <!--ブラウザの挙動をWebサイト運営者が制御できるようにする-->
+    
+    <!--gon追加-->
+    <%= include_gon %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+        
+    <!--style追加-->
+    <link rel="stylesheet" href="<%= mix('/css/app.css') %>">
+      <!--基本的にstylesheet以外を使用することはない-->
+    
+    <!--Javascript追加-->
+    <script src="<%= mix('/js/bootstrap.js') %>"></script>
+      <!--scriptは、HTMLファイル内でJavaScriptを実行したり、外部のJavaScriptファイルを読み込むことができるタグ-->
+      <!--<script src=""></script>でJavaScriptの読み込み-->
+      <!--mix関数はコンパイルしたCSSやJavascriptを読み込むURLを生成する役割がある-->
+      <!--コンパイル後のファイルを読み込むためのURLを生成している-->
+      <!--'/js/bootstrap.js'を実行する-->
+      <!--bootstrapを使用することでwebサイトやwebアプリを作成できるフリーソフト-->
+    
+    <!--turbo.js追加-->
+    <script src="<%= mix('/js/turbo.js') %>"></script>
+
+    <!--Javascript追加-->
+    <script src="<%= mix('/js/modal.js') %>"></script>
+    <script src="<%= mix('/js/time.js') %>"></script>
+    <script src="<%= mix('/js/application.js') %>"></script>
+
+    <!--外部のStripe.jsを読み込む-->
+    <script src="https://js.stripe.com/v3/"></script>
+  
+  </head>
+  
+  <body>
+        
+    <!--ナビゲーションバー-->
+    <nav class="custom-navbar">
+      <div id="menuToggle">
+
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+
+        <!--hamburger menu-->
+        <ul id="menu">
+          <!--ログインしているか？ user_singed_in?はdeviceが提供している認証済みかを判定するメソッド-->
+          <% if user_signed_in? %>
+            <% if current_user.contributor_code == 2 %>
+              <!--Railsのlink_toメソッドは、HTMLの<a>タグに相当-->
+              <li> <%= link_to "トップ", "/", class: "nav-link" %></li>
+              <li> <%= link_to "チケット一覧", index_post_ticket_path , class: "nav-link" %></li>
+              <li> <%= link_to "オークション一覧", index_post_path , class: "nav-link" %></li>
+              <li> <%= link_to "入札中", index_bid_path(current_user.id) , class: "nav-link" %></li>
+              <li> <%= link_to "落札履歴", index_hammer_path, class: "nav-link" %></li>
+              <li> <%= link_to "購入チケット", index_purchasing_quantity_path, class: "nav-link" %></li>
+              <li> <%= link_to "登録情報更新", mypage_edit_user_contributor_path(current_user.id), class: "nav-link" %></li>
+              <li> <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
+              <li> <%= link_to "お問い合わせ", new_inquiry_path(current_user.id), class: "nav-link" %></li>
+              <li> <%= "------投稿者用------"%></li>
+              <li> <%= link_to "投稿者情報更新", edit_user_contributor_path(current_user.id), class: "nav-link" %></li>
+              <li> <%= link_to "オークション投稿", new_post_path , class: "nav-link" %></li>
+              <li> <%= link_to "オークション管理", contributor_index_post_path(current_user.id), class: "nav-link" %></li>
+              <li> <%= link_to "チケット投稿", new_post_ticket_path , class: "nav-link" %></li>
+              <li> <%= link_to "チケット管理", contributor_index_post_ticket_path(current_user.id), class: "nav-link" %></li>
+            <% else %>
+              <li> <%= link_to "トップ", "/", class: "nav-link" %></li>
+              <li> <%= link_to "チケット一覧", index_post_ticket_path , class: "nav-link" %></li>
+              <li> <%= link_to "オークション一覧", index_post_path , class: "nav-link" %></li>
+              <li> <%= link_to "入札中", index_bid_path(current_user.id) , class: "nav-link" %></li>
+              <li> <%= link_to "落札履歴", index_hammer_path, class: "nav-link" %></li>
+              <li> <%= link_to "購入チケット", index_purchasing_quantity_path, class: "nav-link" %></li>
+              <li> <%= link_to "登録情報更新", mypage_edit_user_contributor_path(current_user.id), class: "nav-link" %></li>
+              <li> <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
+              <li> <%= link_to "お問い合わせ", new_inquiry_path(current_user.id), class: "nav-link" %></li>
+            <% end %>
+          <% else %>
+            <li> <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %></li>
+            <li> <%= link_to "ログイン", new_user_session_path, class: "nav-link" %></li> 
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="display_name-container">
+        <% if user_signed_in? %>
+          <span class="display_name-text">ログイン中</span>
+          <span class="display_name-text"><%= current_user.display_name %>&nbsp;さん</span>
+        <% end %>
+      </div>
+
+      <!--
+      <div class="logo">
+        <%= image_tag 'app_wide_logo.png' ,class: "logo-img" %>
+      </div>
+      -->
+
+    </nav>
+
+    <!--
+    <footer>
+      <p class="copyright">©︎ OMUSUBI Tech Academy. All Right Reserved.</p>
+    </footer>
+    -->
+
+    <!-- アラートメッセージ -->
+    <% if notice %>
+      <div class="alert alert-success" role="alert">
+        <%= notice %> <!--何かの通知を表示-->
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="alert alert-danger" role="alert">
+        <%= alert %> <!--警告メッセージ-->
+      </div>
+    <% end %>
+    
+    <div class="bg-white text-dark">
+      <%= yield %>
+    </div>
+
+    <!-- Javascript -->
+    <script src="<%= mix('/js/app.js') %>"></script>
+
+  </body>
+  
+</html>

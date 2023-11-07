@@ -1,0 +1,39 @@
+<div class="show-button-container">
+  <!--ヘッダーのスペース確保 -->
+</div>
+
+<div class="post-form-body">
+  <div class="post-form-container">
+    <h2>落札者への連絡事項</h2>
+
+    <div class="form-group">
+      <span class="form-label"> 集合日時 </span>
+      <span class="form-control"> <%= @successful_bidder_limited.set_time.strftime("%Y年%m月%d日%H時%M分") %> </span>
+    </div>
+
+    <div class="form-group">
+      <span class="form-label"> 集合場所 </span>
+      <span class="form-control"> <%= @successful_bidder_limited.set_location %> </span>
+    </div>
+
+    <div class="form-group">
+      <span class="form-label"> イベントが中止になる条件（雨天中止等） </span>
+      <span class="form-control"> <%= @successful_bidder_limited.suspension %> </span>
+    </div>
+
+    <div class="form-group">
+      <span class="form-label"> 主催者の連絡先 </span>
+      <span class="form-control"> <%= @successful_bidder_limited.contact_address %> </span>
+    </div>       
+
+    <div class="form-group">
+      <span class="form-label"> 連絡事項 </span>
+      <span class="form-control"> <%= safe_join(@successful_bidder_limited.message.split("\n"),tag(:br)) %> </span>
+    </div>     
+        
+    <div class="button-group">
+      <%= link_to '戻る', index_hammer_path, class: "inquiries-button inquiries-button-text" %>
+    </div>
+  
+  </div>
+</div>

@@ -1,0 +1,2 @@
+module EventInquiriesHelper
+end

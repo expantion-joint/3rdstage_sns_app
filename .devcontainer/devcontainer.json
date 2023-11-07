@@ -1,0 +1,17 @@
+{
+    "name": "devcontainer settings for cimg/ruby",
+    "dockerComposeFile": ["../docker-compose.yml"],
+    "service": "rails",
+    "runServices": ["rails"],
+    "workspaceFolder": "/src",
+    "remoteUser": "root",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "KoichiSasada.vscode-rdbg"
+        ],
+        "settings": {
+        }
+      }
+    }
+  }

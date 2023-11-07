@@ -1,0 +1,114 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "イベント一覧に戻る", index_post_path, class: "show-button-text"%>
+  </div>
+  <div class="show-button">
+    <%= link_to "このイベントに関するお問い合わせ", new_event_inquiry_path(params[:id]), class: "show-button-text"%>
+  </div>
+</div>
+
+<div class="index-body">
+  <div class="show-upper-container">
+
+    <div class="show-image-container">
+      <% if @post.image.attached? %>
+        <%= image_tag(@post.image, class: "show-image") %>
+      <% else %>
+        <%= image_tag 'sample_no_image.jpg' ,class: "show-image" %>
+      <% end %>
+    </div>
+
+    <table>
+      <tr>
+        <th class=th-post-show>お祭り名</th> <td class=td-post-show><%= @post.festival_name %></td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>イベント名 </th> <td class=td-post-show><%= @post.event_name %></td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>開催日</th> <td class=td-post-show> <%= @post.event_date.strftime("%Y年%m月%d日") %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>開催場所</th> <td class=td-post-show> <%= @post.venue %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>募集人数</th> <td class=td-post-show> <%= @post.count %> 名</td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>カテゴリ</th> <td class=td-post-show> <%= @post.category %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>投稿者</th ><td class=td-post-show> <%= link_to @user.contributor_name, show_user_contributor_path(params[:id]) %> </td>
+      </tr>
+    </table>
+  </div>
+   
+  <div class="show-lower-container">
+    <span class="show-heading-auction">&nbsp;内容（入札前によくご確認ください）</span>
+    
+    <div class="show-detail-container">
+      <span> <%= safe_join(@post.content.split("\n"),tag(:br))%></span>
+    </div>
+
+    <% if @bid_price_now.nil? %>
+      <span class="show-price">現在<%= @post.start_price %>円</span>
+    <% else %>
+      <span class="show-price">現在<%= @bid_price_now.bid_price %>円</span>
+    <% end %>
+
+    <% if @post.start_time > Time.zone.now  %>
+      <span class="show-time">オークション開始前です</span>
+    <% else %>
+      <span><input type="hidden" id="EndTime" value = "<%= @post.end_time %>"  ></span>
+      <div class="show-time">
+        <span id="RealtimeCountdownArea" ></span>
+      </div>
+    <% end %>
+      
+    <% if @post.start_time < Time.zone.now  %>
+      <% if @post.end_time > Time.zone.now  %>
+        <!-- modal button -->
+        <button class="show-bid-button show-bid-button-text js-button" data-target="#modal<%= @post.id %>">入札する</button>
+      <% end %>
+    <% end %>
+
+    <!-- modal -->
+    <div id="modal<%= @post.id %>" class="modal js-modal">
+      <div class="modal-layer">
+        <div class="modal-container">          
+        
+          <%= form_with(url: create_bid_path, model: @bid, local: true, method: :post, html: { class: "post-form" } ) do |f| %>            
+            
+            <div class="modal-field-container">
+              <%= f.label "金額を入力してください", class: "modal-text" %>
+              <% if @bid_price_now.nil? %>
+                <span class=modal-text><%= f.text_field :bid_price, min: @post.start_price + 1, required: true, class: "modal-field" %>円</span>
+              <% else %>
+                <span class=modal-text><%= f.text_field :bid_price, min: @bid_price_now.bid_price + 1, required: true, class: "modal-field" %>円</span>
+              <% end %>
+            </div>
+                        
+            <div class="modal-button-container">
+              <%= f.submit "入札する" ,class: "modal-bid-button modal-button-text js-close-button" %>
+              <button class="modal-close-button js-close-button">
+                <%= link_to "戻る", show_post_path, class: "modal-button-text" %>
+              </button>
+            </div>
+                      
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <span class="show-text">オークション開始：<%= @post.start_time.strftime("%Y年%m月%d日%H:%M") %> </span>
+    <span class="show-text">オークション終了：<%= @post.end_time.strftime("%Y年%m月%d日%H:%M") %> </span>
+    <span class="show-text"> 開始価格：<%= @post.start_price %>円 </span>
+  
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="show-button-container">
+  <!--ヘッダーのスペース確保 -->
+</div>
+
+<div class="post-form-body">
+  <div class="post-form-container">
+    <h2>投稿者登録画面</h2>
+    <%= form_with(url: update_user_contributor_path, model: @user, local: true, method: :post, html: { class: 'post-form' } ) do |f| %>
+      
+      <% if @user.errors.any? %>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <div class="form-group image-upload">
+        <%= f.label "画像", class: 'form-label' %>
+        <div class="image-preview" id="imagePreview">
+          <img src="<%= @user.image.attached? ? url_for(@user.image) : "" %>" alt="Image Preview" class="image-preview__image <%= @user.image.attached? ? "-block" : "" %>">
+          <span class="image-preview__default-text <%= @user.image.attached? ? "-none" : "" %>">No image uploaded</span>
+        </div>
+        <%= f.file_field :image, class: 'form-control-file', id: 'imageUpload' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "投稿者名", class: 'form-label' %>
+        <%= f.text_field :contributor_name, value: @user.contributor_name, required: true, class: 'form-control' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "魅力を伝えたいお祭り・文化財", class: 'form-label' %>
+        <%= f.text_field :contributor_festival, value: @user.contributor_festival, required: true, class: 'form-control' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "お祭りへの想い", class: 'form-label' %>
+        <%= f.text_area :contributor_introduction, value: @user.contributor_introduction, required: true, class: 'form-text-control' %>
+      </div>
+
+      <h2>落札金額を受け取る口座の登録</h2>
+      <% if @result == "error" %>
+        <span class="item-text-price"><%= @message %></span>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label "金融機関コード（4桁の数字）", class: 'form-label' %>
+        <%= f.text_field :financial_institution, value: @user.financial_institution, required: true, class: 'form-name-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "支店コード（3桁の数字）", class: 'form-label' %>
+        <%= f.text_field :branch_name, value: @user.branch_name, required: true, class: 'form-name-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "口座種目", class: 'form-label' %>
+        <%= f.select :deposit_type, [["普通", "普通"], ["当座", "当座"], ["貯蓄", "貯蓄"]], {include_blank: "選択して下さい"}, {class: "form-select-control"} %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "口座番号（7桁の数字・ゆうちょ銀行は8桁）", class: 'form-label' %>
+        <%= f.text_field :account_number, value: @user.account_number, required: true, class: 'form-name-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "口座名義（カナ・数字・アルファベット・記号）", class: 'form-label' %>
+        <%= f.text_field :account_name, value: @user.account_name, required: true, class: 'form-control' %>
+      </div>
+        
+      <div class="button-group">
+        <%= link_to "マイページに戻る", mypage_index_user_contributor_path, class: "inquiries-button inquiries-button-text" %>
+        <%= f.submit '登録する', class: 'inquiries-orange-button inquiries-button-text' %>
+      </div>
+      
+    <% end %>
+  </div>
+</div>

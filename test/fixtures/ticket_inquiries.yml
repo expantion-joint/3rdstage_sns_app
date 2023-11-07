@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  post_ticket: one
+  email: MyString
+  subject: MyString
+  message: MyString
+  name: MyString
+
+two:
+  user: two
+  post_ticket: two
+  email: MyString
+  subject: MyString
+  message: MyString
+  name: MyString

@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_number: one
+  festival_name: MyString
+  event_name: MyString
+  category: MyString
+  content: MyText
+  event_date: 2023-07-26
+  venue: MyString
+  start_time: 2023-07-26 13:49:21
+  end_time: 2023-07-26 13:49:21
+  start_price: 1
+  count: 1
+
+two:
+  user_number: two
+  festival_name: MyString
+  event_name: MyString
+  category: MyString
+  content: MyText
+  event_date: 2023-07-26
+  venue: MyString
+  start_time: 2023-07-26 13:49:21
+  end_time: 2023-07-26 13:49:21
+  start_price: 1
+  count: 1

@@ -1,0 +1,61 @@
+<!-- search -->
+<div class="search">
+  <div class="search-container">
+    <%= form_with url: index_post_path, class: "search-form", method: :get, local: true do |form| %>
+      <label>
+          <input type="text" name="festival_name" placeholder="お祭り名で検索" value="<%= params[:festival_name] %>">
+      </label>
+      <button type="submit" aria-label="検索"></button>
+    <% end %>
+  </div>
+</div>
+
+<!-- margin -->
+<div class="index-margin"></div>
+
+<!-- body -->
+<div class="index-body index-body-background-ticket">
+
+  <h2 class="index-heading-ticket">お知らせ</h2>
+  <div class="index-info">
+    <div class="index-info-container">
+      <%= image_tag 'sample_image_information.jpg' ,class: "index-info-image" %>
+      <%= image_tag 'sample_image_information.jpg' ,class: "index-info-image" %>
+      <%= image_tag 'sample_image_information.jpg' ,class: "index-info-image" %>
+      <%= image_tag 'sample_image_information.jpg' ,class: "index-info-image" %>
+    </div>
+  </div>
+
+  <h2 class="index-heading-ticket">体験一覧</h2>
+
+  <div class="index-container">
+
+    <% @post_tickets.each do |post_ticket| %>
+    
+      <a class="index-item-container" href="<%= show_post_ticket_path(post_ticket) %>">
+        
+        <div class="index-item-image-container">
+          <% if post_ticket.image.attached? %>
+            <%= image_tag(post_ticket.image, class: "index-item-image") %>
+          <% else %>
+            <%= image_tag 'sample_no_image.jpg' ,class: "index-item-image" %>
+          <% end %>
+          <div class="index-item-image-festival_name">
+            <span><%= post_ticket.festival_name %></span>
+          </div>
+          <div class="index-item-image-price">  
+            <span><%= post_ticket.price %>円</span>
+          </div>
+        </div>
+
+        <div class="index-item-title-container">
+          <span class="index-item-title-text"><%= post_ticket.event_name %></span>
+          <span class="index-item-title-text">開催日:<%= l post_ticket.event_date %></span>
+          <span class="index-item-title-text">開催場所:<%= post_ticket.venue %></span>
+        </div>
+        
+      </a>
+
+    <% end %>
+  </div>
+</div>

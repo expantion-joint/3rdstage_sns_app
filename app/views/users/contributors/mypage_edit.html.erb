@@ -1,0 +1,81 @@
+<div class="show-button-container">
+  <!--ヘッダーのスペース確保 -->
+</div>
+
+<div class="post-form-body">
+  <div class="mypage_edit-container">
+    <h2>登録情報更新画面</h2>
+    <%= form_with(url: mypage_update_user_contributor_path, model: @user, local: true, method: :post, html: { class: 'post-form' } ) do |f| %>
+      
+      <% if @user.errors.any? %>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label :メールアドレス, class: 'form-label' %>
+        <%= f.email_field :email, value: @user.email, autofocus: true, autocomplete: "email", class: 'form-mypage_edit-control' %>
+      </div>
+
+      <div class="form-side-by-side-group">
+        <div class="form-group">
+          <%= f.label :last_name, "姓", class: 'form-label' %>
+          <%= f.text_field :last_name, value: @user.last_name, class: 'form-name-control'%>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :first_name, "名", class: 'form-label' %>
+          <%= f.text_field :first_name, value: @user.first_name, class: 'form-name-control'%>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :display_name, "ユーザー名", class: 'form-label' %>
+        <%= f.text_field :display_name, value: @user.display_name, class: 'form-mypage_edit-control'%>
+      </div>
+
+      <!-- コメントアウト
+      <div class="form-group">
+        <%= f.label :postcode, "郵便番号", class: 'form-label' %>
+        <%= f.text_field :postcode, value: @user.postcode, class: 'form-number-control'%>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :prefecture_code, "都道府県", class: 'form-label' %>
+        <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, { prompt: "Select a prefecture", selected: @user.prefecture_code }, { class: "form-select-control" } %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :address_city, "市区町村", class: 'form-label' %>
+        <%= f.text_field :address_city, value: @user.address_city, class: 'form-mypage_edit-control'%>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :address_street, "町域・番地", class: 'form-label' %>
+        <%= f.text_field :address_street, value: @user.address_street, class: 'form-mypage_edit-control'%>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :address_building, "建物名", class: 'form-label'  %>
+        <%= f.text_field :address_building, value: @user.address_building, class: 'form-mypage_edit-control'%>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :birthday, "生年月日", class: 'form-label' %>
+        <div class="form-side-by-side-group">
+          <%= f.date_select(:birthday, {value: @user.birthday, start_year: (Time.now.year - 100), end_year: (Time.now.year)}, {class: "form-date_select-control"})%>
+        </div>
+      </div>
+      -->
+            
+      <div class="button-group">
+        <%= link_to "マイページに戻る", mypage_index_user_contributor_path, class: "inquiries-button inquiries-button-text" %>
+        <%= f.submit '更新する', class: 'inquiries-orange-button inquiries-button-text' %>
+      </div>
+    
+    <% end %>
+  </div>
+</div>

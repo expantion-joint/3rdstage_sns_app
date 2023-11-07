@@ -1,0 +1,88 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "投稿一覧に戻る", index_post_ticket_path, class: "show-button-text"%>
+  </div>
+</div>
+
+<div class="post-form-body">
+  <div class="post-form-container">
+    <h2>イベントを編集してください</h2>
+    <%= form_with(url: update_post_ticket_path, model: @post_ticket, local: true, method: :post, html: { class: 'post-form' }  ) do |f| %>
+      
+      <% if @post_ticket.errors.any? %>
+        <ul>
+          <% @post_ticket.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <div class="form-group image-upload">
+        <%= f.label "画像", class: 'form-label' %>
+        <div class="image-preview" id="imagePreview">
+          <img src="<%= @post_ticket.image.attached? ? url_for(@post_ticket.image) : "" %>" alt="Image Preview" class="image-preview__image <%= @post_ticket.image.attached? ? "-block" : "" %>">
+          <span class="image-preview__default-text <%= @post_ticket.image.attached? ? "-none" : "" %>">No image uploaded</span>
+        </div>
+        <%= f.file_field :image, class: 'form-control-file', id: 'imageUpload' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "お祭り名", class: 'form-label' %>
+        <%= f.text_field :festival_name, value: @post_ticket.festival_name, class: 'form-control' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "イベント名", class: 'form-label' %>
+        <%= f.text_field :event_name, value: @post_ticket.event_name, class: 'form-control' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "募集数", class: 'form-label' %>
+        <div class="form-side-by-side-group">
+          <%= f.text_field :count, value: @post_ticket.count, min: 1, class: 'form-number-control' %>
+          <% choices = [["人", "人"], ["組", "組"]] %>
+          <%= f.select :unit, options_for_select(choices, @post_ticket.unit), {include_blank: "単位を選択"}, {class: "form-select-control"} %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "カテゴリ", class: 'form-label'  %>
+        <% choices = [["体験", "体験"], ["観覧", "観覧"], ["その他", "その他"]] %>
+        <%= f.select :category, options_for_select(choices, @post_ticket.category), {include_blank: "選択して下さい"}, {class: "form-select-control"} %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "内容", class: 'form-label' %>
+        <%= f.text_area :content, value: @post_ticket.content, class: 'form-text-control' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "開催日", class: 'form-label' %>
+        <div class="form-side-by-side-group">
+          <%= f.date_select(:event_date, {value: @post_ticket.event_date}, {class: "form-date_select-control"}) %>
+        </div>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "開催場所", class: 'form-label' %>
+        <%= f.text_field :venue, value: @post_ticket.venue, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "価格", class: 'form-label' %>
+        <div class="form-side-by-side-group">
+          <%= f.text_field :price, value: @post_ticket.price, class: 'form-number-control' %>
+          <span class='form-label'>円</span>
+        </div>
+      </div>
+
+      <%= f.hidden_field :total_purchases, value: @post_ticket.total_purchases %>
+
+      <div class="button-group">
+        <%= link_to '投稿を削除する', destroy_post_ticket_path(@post_ticket), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "inquiries-button inquiries-button-text" %>
+        <%= f.submit '更新する', class: 'inquiries-orange-button inquiries-button-text' %>
+      </div>
+      
+    <% end %>
+  </div>
+</div>

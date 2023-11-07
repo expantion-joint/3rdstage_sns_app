@@ -1,0 +1,81 @@
+<!-- search -->
+<div class="search">
+  <div class="search-container">
+    <%= form_with url: index_post_path, class: "search-form", method: :get, local: true do |form| %>
+      <label>
+          <input type="text" name="festival_name" placeholder="お祭り名で検索" value="<%= params[:festival_name] %>">
+      </label>
+      <button type="submit" aria-label="検索"></button>
+    <% end %>
+  </div>
+</div>
+
+<!-- margin -->
+<div class="index-margin"></div>
+
+<!-- body -->
+<div class="index-body index-body-background-auction">
+
+  <h2 class="index-heading-auction">お知らせ</h2>
+  <div class="index-info">
+    <div class="index-info-container">
+      <%= image_tag 'sample_image_information.jpg' ,class: "index-info-image" %>
+      <%= image_tag 'sample_image_information.jpg' ,class: "index-info-image" %>
+      <%= image_tag 'sample_image_information.jpg' ,class: "index-info-image" %>
+      <%= image_tag 'sample_image_information.jpg' ,class: "index-info-image" %>
+    </div>
+  </div>
+
+  <h2 class="index-heading-auction">オークション一覧</h2>
+
+  <div class="index-container">
+    <% i = -1 %>
+    <!-- @postsという配列の中の各投稿に対してループ処理を行う
+      @postsに含まれる要素を順に|post|に代入 -->
+    <% @posts.each do |post| %>
+      <% i = i + post.count %>
+      <% @bid = @bids[i] %>
+
+      <a class="index-item-container" href="<%= show_post_path(post) %>">
+        <div class="index-item-image-container">
+          <% if post.image.attached? %>
+            <%= image_tag(post.image, class: "index-item-image") %>
+          <% else %>
+            <%= image_tag 'sample_no_image.jpg' ,class: "index-item-image" %>
+          <% end %>
+          <div class="index-item-image-festival_name">
+            <span><%= post.festival_name %></span>
+          </div>
+          <div class="index-item-image-price">  
+            <% if @bid.nil? %>
+              <span>現在<%= post.start_price %>円</span>
+            <% else %>
+              <span>現在<%= @bid.bid_price %>円</span>
+            <% end %>
+          </div>
+          <% if post.start_time > Time.zone.now %>
+            <div class="index-item-image-remaining_days remaining_days-color-before">
+              <span>開始前</span>
+            </div>
+          <% elsif post.end_time > Time.zone.now %>
+            <% remaining_days = (post.end_time.end_of_day - Time.zone.now).to_i / 1.day %>
+            <div class="index-item-image-remaining_days remaining_days-color-now">
+              <span>残り<%= remaining_days %>日</span>
+            </div>
+          <% else %>
+            <div class="index-item-image-remaining_days remaining_days-color-after">
+              <span>終了</span>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="index-item-title-container">
+          <span class="index-item-title-text"><%= post.event_name %></span>
+          <span class="index-item-title-text">開催日:<%= l post.event_date %></span>
+          <span class="index-item-title-text">開催場所:<%= post.venue %></span>
+        </div>
+
+      </a>
+    <% end %>
+  </div>
+</div>

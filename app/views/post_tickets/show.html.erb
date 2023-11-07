@@ -1,0 +1,101 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "イベント一覧に戻る", index_post_ticket_path, class: "show-button-text"%>
+  </div>
+  <div class="show-button">
+    <%= link_to "このイベントに関するお問い合わせ", new_ticket_inquiry_path(params[:id]), class: "show-button-text"%>
+  </div>
+</div>
+
+<div class="index-body">
+  <div class="show-upper-container">
+
+    <div class="show-image-container">
+      <% if @post_ticket.image.attached? %>
+        <%= image_tag(@post_ticket.image, class: "show-image") %>
+      <% else %>
+        <%= image_tag 'sample_no_image.jpg' ,class: "show-image" %>
+      <% end %>
+    </div>
+
+    <table>
+      <tr>
+        <th class=th-post-show>お祭り名</th> <td class=td-post-show><%= @post_ticket.festival_name %></td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>イベント名 </th> <td class=td-post-show><%= @post_ticket.event_name %></td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>開催日</th> <td class=td-post-show> <%= @post_ticket.event_date.strftime("%Y年%m月%d日") %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>開催場所</th> <td class=td-post-show> <%= @post_ticket.venue %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>募集数</th> <td class=td-post-show> <%= @post_ticket.count %> <%= @post_ticket.unit %></td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>カテゴリ</th> <td class=td-post-show> <%= @post_ticket.category %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-post-show>投稿者</th ><td class=td-post-show> <%= link_to @user.contributor_name, show_user_contributor_path(params[:id]) %> </td>
+      </tr>
+    </table>
+  </div>
+   
+  <div class="show-lower-container">
+    <span class="show-heading-auction">&nbsp;内容（購入前によくご確認ください）</span>
+    
+    <div class="show-detail-container">
+      <span> <%= safe_join(@post_ticket.content.split("\n"),tag(:br))%></span>
+    </div>
+
+    <% if @post_ticket.event_date < Time.zone.now  %>
+      <span class="show-price">販売を終了しました</span>
+    <% else %>
+      <% if @remain == 0 %>
+        <span class="show-price">SOLD&nbsp;OUT</span>
+      <% else %>
+        <span class="show-price"><%= @post_ticket.price %>円（残り<%= @remain %><%= @post_ticket.unit%>）</span>
+      <% end %>
+    <% end %>
+
+    <% if @post_ticket.event_date > Time.zone.now  %>
+      <% if @remain != 0 %>
+        <!-- modal button -->
+        <button class="show-bid-button show-bid-button-text js-button" data-target="#modal<%= @post_ticket.id %>">購入する</button>
+      <% end %>
+    <% end %>
+
+    <!-- modal -->
+    <div id="modal<%= @post_ticket.id %>" class="modal js-modal">
+      <div class="modal-layer">
+        <div class="modal-container">          
+        
+          <%= form_with(url: create_purchasing_quantity_path, model: @purchasing_quantity, local: true, method: :post, html: { class: "post-form" } ) do |f| %>            
+            
+            <div class="modal-field-container">
+              <%= f.label "購入数を入力してください", class: "modal-text" %>
+              <span class=modal-text><%= f.text_field :count, min: 1,max: @remain, required: true, class: "modal-field" %><%= @post_ticket.unit%></span>
+            </div>
+                        
+            <div class="modal-button-container">
+              <%= f.submit "購入する" ,class: "modal-bid-button modal-button-text js-close-button" %>
+              <button class="modal-close-button js-close-button">
+                <%= link_to "戻る", show_post_ticket_path, class: "modal-button-text" %>
+              </button>
+            </div>
+                      
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

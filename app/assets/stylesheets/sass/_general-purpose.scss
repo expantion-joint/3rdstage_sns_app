@@ -1,0 +1,132 @@
+/* ===================== index ===================== */
+.gp-index-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;          /* 100vh:高さ方向全画面 50vh:高さ方向中央 */
+  min-height: 100vh;     /* 100vh:幅方向全画面 */
+  width: 100%;          
+}
+
+.gp-index-item-container{
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: auto;
+  padding: 10px;
+  gap: 3px;
+  overflow: hidden;        /* はみ出した部分を隠す */
+  text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.gp-index-item-container:hover{
+  background-color: #f1f0f0;
+}
+
+.gp-flex-container{
+  display: flex;
+  align-items: center;
+}
+
+.gp-line {
+  width: calc(80% + 20px);
+  border: 0.8px solid #bebebe;
+}
+
+.gp-text-red {
+  color: #ff2d2d;
+  overflow: hidden;        /* はみ出した部分を隠す */
+  text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
+}
+
+.gp-text-black {
+  color: #000000;
+  overflow: hidden;        /* はみ出した部分を隠す */
+  text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
+}
+
+.gp-text-bold {
+  font-weight: 600;
+  overflow: hidden;        /* はみ出した部分を隠す */
+  text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
+}
+
+.gp-index-heading-1 {
+  display: inline-block;
+  position: relative;
+  padding: 0 2.5em;
+  color: #333333;
+}
+
+.gp-index-heading-1::before,
+.gp-index-heading-1::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  width: 45px;
+  height: 3px;
+  background-color: #2589d0;
+}
+
+.gp-index-heading-1::before {
+  left: 0;
+}
+
+.gp-index-heading-1::after {
+  right: 0;
+}
+
+.gp-index-heading-2 {
+  display: inline-block;
+  position: relative;
+  padding: 0 2.5em;
+  color: #333333;
+}
+
+.gp-index-heading-2::before,
+.gp-index-heading-2::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  width: 45px;
+  height: 3px;
+  background-color: #ffc001;
+}
+
+.gp-index-heading-2::before {
+  left: 0;
+}
+
+.gp-index-heading-2::after {
+  right: 0;
+}
+
+.gp-index-heading-3 {
+  display: inline-block;
+  position: relative;
+  padding: 0 2.5em;
+  color: #333333;
+}
+
+.gp-index-heading-3::before,
+.gp-index-heading-3::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  width: 45px;
+  height: 3px;
+  background-color: #02a72b;
+}
+
+.gp-index-heading-3::before {
+  left: 0;
+}
+
+.gp-index-heading-3::after {
+  right: 0;
+}

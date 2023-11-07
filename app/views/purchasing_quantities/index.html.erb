@@ -1,0 +1,43 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "マイページに戻る", mypage_index_user_contributor_path, class: "show-button-text"%>
+  </div>
+</div>
+
+<!-- body -->
+<div class="gp-index-body">
+
+  <h2 class="gp-index-heading-2">購入チケット一覧</h2>
+
+  <% if !@post_tickets.nil?%>
+
+    <% @post_tickets.each do |post_ticket| %>
+
+      <div class="gp-line"></div>
+
+      <a class="gp-index-item-container" href="<%= show_ticket_buyer_limited_path(post_ticket.id) %>">
+            
+        <!--
+        <div class="item-image-container">
+            <% if post_ticket.image.attached? %>
+            <%= image_tag(post_ticket.image, class: "item-image") %>
+            <% else %>
+            <%= image_tag 'sample_no_image.jpg' ,class: "item-image" %>
+            <% end %>
+        </div>
+        -->
+
+          <span class="gp-text-bold gp-text-black"><%= post_ticket.festival_name %></span>
+          <span class="gp-text-bold gp-text-black"><%= post_ticket.event_name %></span>
+          <span class="gp-text-black">開催日：<%= l post_ticket.event_date %></span>
+          <span class="gp-text-black">開催場所：<%= post_ticket.venue %></span>
+
+          <div class="gp-flex-container">
+            <span class="gp-text-black">購入価格：</span><span class="gp-text-black"><%= post_ticket.price %>円</span>
+          </div>
+
+      </a>
+    <% end %>
+    <div class="gp-line"></div>
+  <% end %>
+</div>

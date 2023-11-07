@@ -1,0 +1,86 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "イベント一覧に戻る", index_post_ticket_path, class: "show-button-text"%>
+  </div>
+</div>
+
+<div class="post-form-body">
+  <div class="post-form-container">
+    <h2>イベント投稿画面</h2>
+    <%= form_with(url: create_post_ticket_path, model: @post_ticket, local: true, method: :post, html: { class: 'post-form' }  ) do |f| %>
+      
+      <% if @post_ticket.errors.any? %>
+        <ul>
+          <% @post_ticket.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <div class="form-group image-upload">
+        <%= f.label "画像", class: 'form-label' %>
+        <div class="image-preview" id="imagePreview">
+          <img src="" alt="Image Preview" class="image-preview__image">
+          <span class="image-preview__default-text">Image will be displayed here</span>
+        </div>
+        <%= f.file_field :image, class: 'form-control-file', id: 'imageUpload' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "お祭り名", class: 'form-label' %>
+        <%= f.text_field :festival_name, class: 'form-control' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "イベント名", class: 'form-label' %>
+        <%= f.text_field :event_name, class: 'form-control' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "募集数", class: 'form-label' %>
+        <div class="form-side-by-side-group">
+          <%= f.text_field :count, min: 1, class: 'form-number-control' %>
+          <%= f.select :unit, [["人", "人"], ["組", "組"]], {include_blank: "単位を選択"}, {class: "form-select-control"} %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "カテゴリ", class: 'form-label'  %>
+        <%= f.select :category, [["体験", "体験"], ["観覧", "観覧"], ["その他", "その他"]], {include_blank: "選択して下さい"}, {class: "form-select-control"} %>
+        <!--f.select :保存先のカラム名, [["選択肢１", "実際にDBに保存させる内容"], ["選択肢２", "実際にDBに保存させる内容"]], include_blank: "選択して下さい"-->
+      </div>
+
+      <div class="form-group">
+        <%= f.label "内容", class: 'form-label' %>
+        <%= f.text_area :content, class: 'form-text-control' %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "開催日", class: 'form-label' %>
+        <div class="form-side-by-side-group">
+          <%= f.date_select(:event_date, {}, {class: "form-date_select-control"}) %>
+        </div>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "開催場所", class: 'form-label' %>
+        <%= f.text_field :venue, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "価格", class: 'form-label' %>
+        <div class="form-side-by-side-group">
+          <%= f.text_field :price, class: 'form-number-control' %>
+          <span class='form-label'>円</span>
+        </div>
+      </div>
+
+      <%= f.hidden_field :total_purchases, value: 0 %>
+
+      <div class="button-group">
+        <%= f.submit '投稿する', class: 'inquiries-button inquiries-button-text' %>
+      </div>
+      
+    <% end %>
+  </div>
+</div>

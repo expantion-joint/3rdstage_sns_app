@@ -1,0 +1,38 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "イベント詳細に戻る", show_post_path, class: "show-button-text"%>
+  </div>
+</div>
+
+<div class="detail-body">
+  
+  <div class="detail-image-container">
+    <% if @user.image.attached? %>
+      <%= image_tag(@user.image, class: "detail-image") %>
+    <% else %>
+      <%= image_tag 'sample_no_image.jpg' ,class: "detail-image" %>
+    <% end %>
+  </div>
+    
+  <div class="user-show-list-container">
+      
+    <div class="detail-list-contrivutor">
+      <div class="detail-list-container">
+        <span class="text-18px-black">投稿者名</span>
+        <span class="text-18px-black">携わってきたお祭り</span>
+      </div>
+
+      <div class="detail-list-container">
+        <span class="text-18px-black-bold"><%= @user.contributor_name %></span>
+        <span class="text-18px-black-bold"><%= @user.contributor_festival %></span>
+      </div>
+    </div>
+    
+    <span class="index-text">お祭りへの想い</span>
+    <div class="user-show-detail-container">
+      <span class="user-show-detail-text"> <%= safe_join(@user.contributor_introduction.split("\n"),tag(:br))%></span>
+    </div>
+    
+  </div>
+
+</div>

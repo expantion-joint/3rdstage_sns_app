@@ -1,0 +1,42 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "投稿一覧に戻る", contributor_index_post_path, class: "show-button-text"%>
+  </div>
+</div>
+
+<!-- body -->
+<div class="body-no-margin-top">
+
+  <span class="index-text">落札者一覧</span>
+  <span class="index-text">募集者数：<%= @post.count %></span>
+  <span class="index-text">落札者数：<%= @Num_of_hammer %></span>
+
+  <% if @Num_of_hammer != 0 %>
+
+    <% i = 0 %>
+    <% @hammers.each do |hammer| %>
+      <% @bid = @bids[i] %>
+      <% @user = @users[i] %>
+
+      <table>
+        <tr>
+          <th class=th-complete>落札No.</th> <td class=td-complete><%= hammer.id %></td>
+        </tr>
+
+        <tr>
+          <th class=th-complete>落札価格(円)</th> <td class=td-complete><%= @bid.bid_price %></td>
+        </tr>
+
+        <tr>
+          <th class=th-complete>氏名</th> <td class=td-complete> <%= @user.last_name %>&nbsp;<%= @user.first_name %></td>
+        </tr>
+
+        <tr>
+          <th class=th-complete>メールアドレス</th> <td class=td-complete> <%= @user.email %> </td>
+        </tr>
+      </table>
+      
+      <% i = i + 1 %>
+    <% end %>
+  <% end %>
+</div>

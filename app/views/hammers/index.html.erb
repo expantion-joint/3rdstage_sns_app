@@ -1,0 +1,51 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "マイページに戻る", mypage_index_user_contributor_path, class: "show-button-text"%>
+  </div>
+</div>
+
+<!-- body -->
+<div class="gp-index-body">
+
+  <h2 class="gp-index-heading-2">落札イベント一覧</h2>
+
+  <% i = 0 %>
+    <!-- @postsという配列の中の各投稿に対してループ処理を行う
+         @postsに含まれる要素を順に|post|に代入 -->
+  <% @posts.each do |post| %>
+    <% @bid = @bids[i] %>
+
+    <div class="gp-line"></div>
+    
+    <%# <a class="item-container" href="<%= show_successful_bidder_limited_path(post.id)"> %>
+    <a class="gp-index-item-container" href="<%= new_payment_path(post.id) %>">
+        
+    <!--
+    <div class="item-image-container">
+      <% if post.image.attached? %>
+        <%= image_tag(post.image, class: "item-image") %>
+      <% else %>
+        <%= image_tag 'sample_no_image.jpg' ,class: "item-image" %>
+      <% end %>
+    </div>
+    -->
+
+      <span class="gp-text-bold gp-text-black"><%= post.festival_name %></span>
+      <span class="gp-text-bold gp-text-black"><%= post.event_name %></span>
+      <span class="gp-text-black">開催日：<%= l post.event_date %></span>
+      <span class="gp-text-black">開催場所：<%= post.venue %></span>
+
+      <div class="gp-flex-container">
+        <span class="gp-text-black">落札価格：</span><span class="gp-text-bold gp-text-red"><%= @bid.bid_price %>円</span>
+        <!-- if -->
+          <span class="gp-text-bold gp-text-red">（未払い）</span>
+        <!-- else -->
+          <!-- <span class="gp-text-bold gp-text-red">（支払い済み）</span> -->
+        <!-- end -->
+      </div>
+    
+    </a>
+    <% i = i + 1 %>
+  <% end %>
+  <div class="gp-line"></div>
+</div>

@@ -1,0 +1,110 @@
+.custom-navbar {
+  display: flex;                    /* 要素を並列にする */
+  position: fixed;                  /* ヘッダー固定 */
+  z-index: 990;
+  top: 0;
+  left: 0;
+  width: calc(100% - 20px);
+  height: 50px;
+  padding: 0px 10px 0px 10px;       /*上、右、下、左 */
+  justify-content: space-between;   /* 各アイテムを均等配置 先頭＆末尾 */
+  align-items: center;
+  background: #FFF;               /* 背景の色 */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#menuToggle {
+  position: relative;          /*相対位置を基準に要素を配置 相対位置とは本来その要素が表示される位置を基準とした位置のこと*/
+  top: 3px;                   /*コンテンツの配置（上）*/
+  left: 30px;                  /*コンテンツの配置（左）*/
+  z-index: 1;                  /*z軸の順番 定義値が大きいほど上面にくる 1は最背面*/
+  user-select: none;           /*ユーザーがテキストを範囲選択できるか制御する*/
+}
+
+#menuToggle a {                /*id:menuToggle の <a>タグ が該当*/
+  text-decoration: none;       /*テキストの装飾的な線の表示*/
+  color: #232323;            /*テキストの色 黒*/
+  transition: color 0.3s ease; /*カーソルを当てると0.3秒かけて色が変化する easeは変化の具合*/
+}
+
+#menuToggle a:hover {          /*hoverはマウスカーソルが要素の上に来たときの表示状態を示す*/
+  color: #535fc8;            /*テキストの色*/
+}
+
+#menuToggle input {            /*id:menuToggle の <input>タグ が該当*/
+  display: block;              /*ブロック要素にする ブロック要素は、幅を指定しない限りは親要素の100％となる*/
+  width: 40px;                 /*コンテンツの幅*/
+  height: 32px;                /*コンテンツの高さ*/
+  position: absolute;          /*絶対配置*/
+  top: -7px;                   /*コンテンツの配置（上）*/
+  left: -5px;                  /*コンテンツの配置（左）*/
+  
+  cursor: pointer;             /*カーソルを当てると手の形になる*/
+
+  opacity: 0;                  /*要素の不透明度*/
+  z-index: 2;                  /*z軸の順番 定義値が大きいほど上面にくる*/
+
+  -webkit-touch-callout: none; /*タッチ時のコールアウトをオフにする*/
+  /*iOS 上で対象が長押しされたとき、 Safari はそのリンクに関する情報をコールアウトで表示する。
+  このプロパティではそういった挙動を無効にすることができる。*/
+}
+
+#menuToggle span {             /*id:menuToggle の <span>タグ が該当*/
+  display: block;              /*ブロック要素*/
+  width: 35px;                 /*コンテンツの幅*/
+  height: 4px;                 /*コンテンツの高さ*/
+  margin-bottom: 5px;          /*コンテンツ下のマージン*/
+  position: relative;          /*相対位置*/
+
+  background: #232323;       /*背景に関するすべてのスタイルプロパティを一括で設定 今回は色のみ指定*/
+  border-radius: 3px;          /*要素の境界の外側の角を丸める*/
+
+  z-index: 1;                  /*z軸の順番 定義値が大きいほど上面にくる*/
+
+  transform-origin: 4px 0px;   /*要素の座標変換 (transform) における原点を設定*/
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+  background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
+  /*4つのプロパティを設定　transition: 1property 2duration	3timing-function 4transition-delay*/
+  /*今回はpropertyがtransform, durationが0.5s, timing-functionがcubic-bezier(0.77, 0.2, 0.05, 1.0)*/
+  /*cubic-bezier(x1,y1,x2,y2):アニメーション実行スピードをx軸・y軸に分けて詳細に設定*/
+  /*opacityは要素の不透明度*/
+}
+
+#menuToggle input:checked ~ span {                    /*spanはインライン要素としてグループ化*/
+  opacity: 1;                                         /*要素の透明度*/
+  transform: rotate(45deg) translate(0px, -1px);
+  background: #232323;
+}
+
+#menuToggle input:checked ~ span:nth-last-child(3) {  /*兄弟要素の中で、後ろから数えて3番目の要素を選択*/
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2) {
+  transform: rotate(-45deg) translate(-1px, 0px);
+}
+
+#menu {
+  position: absolute;
+  width: 160px;
+  margin: -100px 0 0 -50px;
+  padding: 125px 50px 30px;
+  background: #dbdbdb;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  transform-origin: 0 0;
+  transform: translate(-100%, 0);
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+}
+
+#menu li {
+  padding: 10px 0;
+  font-size: 18px;
+}
+
+#menuToggle input:checked ~ ul {
+  transform: none;
+}

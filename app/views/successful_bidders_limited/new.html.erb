@@ -1,0 +1,52 @@
+<div class="show-button-container">
+  <!--ヘッダーのスペース確保 -->
+</div>
+
+<div class="post-form-body">
+  <div class="post-form-container">
+    <h2>落札者への連絡事項を入力してください</h2>
+
+    <%= form_with(url: create_successful_bidder_limited_path(params[:id]), model: @successful_bidder_limited, local: true, method: :post, html: { class: 'post-form' } ) do |f| %>
+        
+      <% if @successful_bidder_limited.errors.any? %>
+        <ul>
+          <% @successful_bidder_limited.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label "集合日時", class: 'form-label' %>
+        <div class="form-side-by-side-group">
+          <%= f.datetime_select(:set_time, {}, {class: 'form-date_select-control'}) %>
+        </div>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label "集合場所", class: 'form-label' %>
+        <%= f.text_field :set_location, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "イベントが中止になる条件（雨天中止等）", class: 'form-label' %>
+        <%= f.text_field :suspension, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "主催者の連絡先", class: 'form-label' %>
+        <%= f.text_field :contact_address, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "連絡事項", class: 'form-label' %>
+        <%= f.text_area :message, class: 'form-text-control' %>
+      </div>
+        
+      <div class="button-group">
+        <%= f.submit '投稿する', class: 'inquiries-button inquiries-button-text' %>
+      </div>
+
+    <% end %>
+  </div>
+</div>

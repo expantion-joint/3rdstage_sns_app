@@ -1,0 +1,102 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "イベント一覧に戻る", index_post_path, class: "show-button-text"%>
+  </div>
+</div>
+
+<div class="post-form-body">
+  <div class="post-form-container">
+    <span class="item-text-price">投稿が完了しました。投稿内容をご確認ください。</span>
+    <p></p>
+    <span class="index-text">イベント投稿内容</span>
+
+    <table>
+      <tr>
+        <th class=th-complete>画像</th>
+        <td class=td-complete>
+          <div class="complete-image-container">
+            <% if @post.image.attached? %>
+              <%= image_tag(@post.image, class: "detail-image") %>
+            <% else %>
+              <%= image_tag 'sample_no_image.jpg' ,class: "detail-image" %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>お祭り名</th> <td class=td-complete><%= @post.festival_name %></td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>イベント名 </th> <td class=td-complete><%= @post.event_name %></td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>募集人数</th> <td class=td-complete> <%= @post.count %> 名 <span class="item-text-price">※オークション開始後、変更不可</span></td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>カテゴリ</th> <td class=td-complete> <%= @post.category %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>内容</th> <td class=td-complete> <%= @post.content %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>開催日</th> <td class=td-complete> <%= @post.event_date.strftime("%Y年%m月%d日") %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>開催場所</th ><td class=td-complete> <%= @post.venue %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>オークション開始日時</th> <td class=td-complete><%= @post.start_time.strftime("%Y年%m月%d日%H時%M分") %> <span class="item-text-price">※オークション開始後、変更不可</span></td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>オークション終了日時</th> <td class=td-complete><%= @post.end_time.strftime("%Y年%m月%d日%H時%M分") %> <span class="item-text-price">※オークション開始後、変更不可</span></td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>オークション開始価格</th> <td class=td-complete><%= @post.start_price %> 円 <span class="item-text-price">※オークション開始後、変更不可</span></td>
+      </tr>
+    </table>
+
+    <div class="button-group">
+      <%= link_to '編集する', edit_post_path(@post.id), class: "inquiries-button inquiries-button-text" %>
+    </div>
+
+    <span class="index-text">落札者専用ページの内容</span>
+    
+    <table>
+      <tr>
+        <th class=th-complete>集合日時</th> <td class=td-complete><%= @successful_bidder_limited.set_time.strftime("%Y年%m月%d日%H時%M分") %></td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>集合場所 </th> <td class=td-complete><%= @successful_bidder_limited.set_location %></td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>イベントが中止になる条件</th> <td class=td-complete> <%= @successful_bidder_limited.suspension %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>主催者の連絡先</th> <td class=td-complete> <%= @successful_bidder_limited.contact_address %> </td>
+      </tr>
+
+      <tr>
+        <th class=th-complete>連絡事項</th> <td class=td-complete> <%= @successful_bidder_limited.message %> </td>
+      </tr>
+    </table>
+    <div class="button-group">
+      <%= link_to '編集する', edit_successful_bidder_limited_path(@post.id), class: "inquiries-button inquiries-button-text" %>
+    </div>
+
+  </div>
+</div>
+
+

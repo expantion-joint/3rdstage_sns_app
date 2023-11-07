@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "rdbg",
+        "name": "Debug Rails with rdbg",
+        "rdbgPath": "bundle exec rdbg",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "command": "${workspaceFolder}/bin/rails",
+        "script": "server -b 0.0.0.0"
+      }
+    ]
+  }

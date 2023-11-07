@@ -1,0 +1,53 @@
+<div class="show-button-container">
+  <div class="show-button">
+    <%= link_to "イベント一覧に戻る", index_post_path, class: "show-button-text"%>
+  </div>
+</div>
+
+<!-- body -->
+<div class="gp-index-body">
+
+  <h2 class="gp-index-heading-2">投稿オークション一覧</h2>
+
+  <% i = -1 %>
+  <% @posts.each do |post| %>
+    <% i = i + post.count %>
+    <% @bid = @bids[i] %>
+
+    <div class="gp-line"></div>
+    
+    <a class="gp-index-item-container" href="<%= edit_post_path(post) %>">
+
+      <!--
+      <div class="item-image-container">
+        <% if post.image.attached? %>
+          <%= image_tag(post.image, class: "item-image") %>
+        <% else %>
+          <%= image_tag 'sample_no_image.jpg' ,class: "item-image" %>
+        <% end %>
+      </div>
+      -->
+
+      <span class="gp-text-bold gp-text-black"><%= post.festival_name %></span>
+      <span class="gp-text-bold gp-text-black"><%= post.event_name %></span>
+      <span class="gp-text-black">開催日：<%= l post.event_date %></span>
+      <span class="gp-text-black">開催場所：<%= post.venue %></span>
+
+      <div class="gp-flex-container">
+        <% if @bid.nil? %>
+          <span class="gp-text-black">現在価格：</span><span class="gp-text-bold gp-text-red"><%= post.start_price %>円&nbsp;</span>
+        <% else %>
+          <span class="gp-text-black">現在価格：</span><span class="gp-text-bold gp-text-red"><%= @bid.bid_price %>円&nbsp;</span>
+        <% end %>
+        <% if post.end_time > Time.zone.now %>
+          <% remaining_days = (post.end_time.end_of_day - Time.zone.now).to_i / 1.day %>
+          <span class="gp-text-black">（残り<%= remaining_days %>日）</span>
+        <% else %>
+          <span class="gp-text-black">（終了）</span>
+        <% end %>
+      </div>
+        
+    </a>
+  <% end %>
+  <div class="gp-line"></div>
+</div>

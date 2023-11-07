@@ -1,0 +1,23 @@
+<div class="top-image-container">
+  <%= image_tag 'top-image.jpg' ,class: "top-image" %>
+  <div class="top-layer">
+    <div class="top">
+      <h1 class="top-heading">
+        <span class="top-heading-primary">Festival</span>
+        <span class="top-heading-secondary">experience!</span>
+      </h1>
+
+      <div class="top-heading-tertiary">
+        <span class="top-heading-tertiary-text">~かつてない貴重な体験へ~</span>
+
+        <%= link_to index_post_ticket_path, style: "text-decoration: none;" do %>
+          <button class="top-button-upper">チケット購入</button>
+        <% end %>
+
+        <%= link_to index_post_path, style: "text-decoration: none;" do %>
+          <button class="top-button-lower">オークション</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

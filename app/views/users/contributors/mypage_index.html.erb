@@ -1,0 +1,13 @@
+<div class="body">
+<%="廃止予定" %>
+    <ul>
+        <li> <%= link_to "登録情報更新", mypage_edit_user_contributor_path(current_user.id), class: "header-navigation-list" %></li>
+        
+        <%if current_user.contributor_code == 2 %>
+            <li> <%= link_to "投稿者情報更新", edit_user_contributor_path(current_user.id), class: "header-navigation-list" %></li>
+        <% end %>
+
+        <li> <%= link_to "入札中", index_bid_path(current_user.id) , class: "header-navigation-list" %></li>
+        <li> <%= link_to "落札履歴", index_hammer_path, class: "header-navigation-list" %></li>
+    </ul>
+</div>
